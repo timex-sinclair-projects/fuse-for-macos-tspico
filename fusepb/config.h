@@ -5,6 +5,9 @@
 /* Defined if we support spectranet */
 #define BUILD_SPECTRANET 1
 
+/* Defined if we support the TS-Pico interface */
+#define BUILD_TSPICO 1
+
 /* Define copyright of Fuse */
 #define FUSE_COPYRIGHT "(c) 1999-2026 Philip Kendall and others"
 

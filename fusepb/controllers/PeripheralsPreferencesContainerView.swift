@@ -14,6 +14,7 @@ private enum MassStorageInterface: String, CaseIterable {
   case plusD = "+D"
   case simple8BitIDE = "Simple 8-bit IDE"
   case spectranet = "Spectranet"
+  case tsPico = "TS-Pico (TS 2068)"
   case zxatasp = "ZXATASP interface"
   case zxcf = "ZXCF interface"
   case zxmmc = "ZXMMC interface"
@@ -59,6 +60,8 @@ private struct PeripheralsPreferencesView: View {
   @AppStorage("opus") private var opusDiscovery = false
   @AppStorage("disciple") private var disciple = false
   @AppStorage("spectranet") private var spectranet = false
+  @AppStorage("tspico") private var tsPico = false
+  @AppStorage("tspicobridge") private var tsPicoBridge = ""
   @AppStorage("didaktik80") private var didaktik80 = false
   @AppStorage("usource") private var currahUSource = false
   @AppStorage("divmmc") private var divMMC = false
@@ -141,6 +144,15 @@ private struct PeripheralsPreferencesView: View {
               .frame(width: 56)
           }
           .padding(.top, 2)
+
+          HStack(alignment: .center, spacing: 10) {
+            Text("TS-Pico bridge:")
+              .frame(width: 128, alignment: .leading)
+
+            TextField("tcp:127.0.0.1:2068", text: $tsPicoBridge)
+              .textFieldStyle(.roundedBorder)
+              .frame(width: 140)
+          }
         }
       }
       .padding(12)
@@ -219,6 +231,7 @@ private struct PeripheralsPreferencesView: View {
       if plusD { return .plusD }
       if simpleIDE { return .simple8BitIDE }
       if spectranet { return .spectranet }
+      if tsPico { return .tsPico }
       if zxatasp { return .zxatasp }
       if zxcf { return .zxcf }
       if zxmmc { return .zxmmc }
@@ -234,6 +247,7 @@ private struct PeripheralsPreferencesView: View {
       opusDiscovery = false
       disciple = false
       spectranet = false
+      tsPico = false
       didaktik80 = false
       currahUSource = false
       divMMC = false
@@ -264,6 +278,8 @@ private struct PeripheralsPreferencesView: View {
         simpleIDE = true
       case .spectranet:
         spectranet = true
+      case .tsPico:
+        tsPico = true
       case .zxatasp:
         zxatasp = true
       case .zxcf:
