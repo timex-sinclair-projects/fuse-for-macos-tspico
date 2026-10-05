@@ -86,9 +86,12 @@ jobs:
         env:
           TEAM: ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          make dist DEVELOPMENT_TEAM="$TEAM" NOTARYTOOL_PROFILE=tspico-notary \
+          make notarize DEVELOPMENT_TEAM="$TEAM" NOTARYTOOL_PROFILE=tspico-notary \
             FUSE_CODESIGN_TIMESTAMP=--timestamp
-          mv Fuse.zip "Fuse-TS-Pico-macOS.zip"
+          # Shipped as "Fuse TS-Pico.app": the folder name isn't part of the
+          # signature or the stapled ticket
+          mkdir -p dist && ditto fusepb/build/Deployment/Fuse.app "dist/Fuse TS-Pico.app"
+          ditto -c -k --keepParent "dist/Fuse TS-Pico.app" "Fuse-TS-Pico-macOS.zip"
 
       - name: Build (ad-hoc signed)
         if: steps.signing.outputs.signed != 'true'
@@ -97,7 +100,8 @@ jobs:
           # Without the hardened runtime: an ad-hoc app with it can't load
           # the ad-hoc Sparkle framework (no Team ID on either).
           codesign --force --deep --sign - fusepb/build/Deployment/Fuse.app
-          ditto -c -k --keepParent fusepb/build/Deployment/Fuse.app "Fuse-TS-Pico-macOS-unsigned.zip"
+          mkdir -p dist && ditto fusepb/build/Deployment/Fuse.app "dist/Fuse TS-Pico.app"
+          ditto -c -k --keepParent "dist/Fuse TS-Pico.app" "Fuse-TS-Pico-macOS-unsigned.zip"
 
       - name: Remove the signing keychain
         if: always() && steps.signing.outputs.signed == 'true'

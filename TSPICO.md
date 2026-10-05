@@ -7,6 +7,11 @@ plugged in. The TS-Pico work is on `tspico-device`. Its `fuse` submodule is
 [fuse-macos-tspico-core](https://github.com/timex-sinclair-projects/fuse-macos-tspico-core)
 (a fork of fmeunier/fuse), on that repository's `tspico-device` branch.
 
+It's called **Fuse TS-Pico** (bundle ID
+`io.github.timex-sinclair-projects.fuse-tspico`), so it sits beside an
+upstream Fuse without sharing its preferences, and it doesn't update itself
+from upstream's feed.
+
 The TS-Pico itself isn't emulated here. Every access to ports 0Eh/0Fh goes to
 `pico_host`, which runs the real TS-Pico firmware with its SD card in a folder
 on your Mac. This is version 1 of

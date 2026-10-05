@@ -3141,7 +3141,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse.ThumbnailExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.ThumbnailExtension";
 				PRODUCT_NAME = FuseThumbnailExtension;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
@@ -3180,7 +3180,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse.ThumbnailExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.ThumbnailExtension";
 				PRODUCT_NAME = FuseThumbnailExtension;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
@@ -3219,7 +3219,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse.ThumbnailExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.ThumbnailExtension";
 				PRODUCT_NAME = FuseThumbnailExtension;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
@@ -3258,7 +3258,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse.PreviewExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.PreviewExtension";
 				PRODUCT_NAME = FusePreviewExtension;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
@@ -3297,7 +3297,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse.PreviewExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.PreviewExtension";
 				PRODUCT_NAME = FusePreviewExtension;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
@@ -3336,7 +3336,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse.PreviewExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.PreviewExtension";
 				PRODUCT_NAME = FusePreviewExtension;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = (
@@ -3397,7 +3397,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico";
 				PRODUCT_NAME = Fuse;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
@@ -3461,7 +3461,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico";
 				PRODUCT_NAME = Fuse;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
@@ -3521,7 +3521,7 @@
 					"-framework",
 					AudioToolbox,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.fuse-for-macosx.Fuse";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico";
 				PRODUCT_NAME = Fuse;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
@@ -3665,7 +3665,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.projects.fuse-for-macosx.FuseHelp";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.FuseHelp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3713,7 +3713,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.projects.fuse-for-macosx.FuseHelp";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.FuseHelp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3760,7 +3760,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.projects.fuse-for-macosx.FuseHelp";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.FuseHelp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3814,7 +3814,7 @@
 					AudioToolbox,
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.projects.fuse-emulator.importer";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.importer";
 				PRODUCT_NAME = FuseImporter;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -3866,7 +3866,7 @@
 					AudioToolbox,
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.projects.fuse-emulator.importer";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.importer";
 				PRODUCT_NAME = FuseImporter;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -3917,7 +3917,7 @@
 					AudioToolbox,
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.projects.fuse-emulator.importer";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.timex-sinclair-projects.fuse-tspico.importer";
 				PRODUCT_NAME = FuseImporter;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (

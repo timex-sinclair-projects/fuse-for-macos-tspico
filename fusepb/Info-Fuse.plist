@@ -608,7 +608,7 @@
 	<key>CFBundleHelpBookFolder</key>
 	<string>$(PROJECT_NAME)Help.help</string>
 	<key>CFBundleHelpBookName</key>
-	<string>net.sourceforge.projects.fuse-for-macosx.$(PROJECT_NAME:rfc1034identifier).help</string>
+	<string>io.github.timex-sinclair-projects.fuse-tspico.$(PROJECT_NAME:rfc1034identifier).help</string>
 	<key>CFBundleIconFile</key>
 	<string>Fuse</string>
 	<key>CFBundleIdentifier</key>
@@ -616,7 +616,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Fuse</string>
+	<string>Fuse TS-Pico</string>
+	<key>CFBundleDisplayName</key>
+	<string>Fuse TS-Pico</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
