@@ -1,0 +1,120 @@
+name: Release
+
+# Fuse for macOS with the TS-Pico, as a download. A tag tspico-v* makes a
+# GitHub release with the zip; a manual run leaves it as a workflow artefact.
+#
+# Signed and notarized when these repository secrets are set, else ad-hoc
+# signed (Gatekeeper then asks before the first launch):
+#   MACOS_CERTIFICATE_P12       Developer ID Application certificate + key,
+#                               exported as .p12, base64-encoded
+#   MACOS_CERTIFICATE_PASSWORD  the .p12's password
+#   APPLE_TEAM_ID               the 10-character Team ID
+#   NOTARY_API_KEY_P8           App Store Connect API key (.p8), base64-encoded
+#   NOTARY_API_KEY_ID           its Key ID
+#   NOTARY_API_ISSUER_ID        its Issuer ID
+
+on:
+  push:
+    tags: ['tspico-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+        run: |
+          brew install ruby autoconf automake libtool
+          RUBY="$(brew --prefix ruby)/bin"
+          export PATH="$RUBY:$PATH"
+          gem install jekyll bundler
+          echo "$RUBY" >> "$GITHUB_PATH"
+          echo "$(gem environment gemdir)/bin" >> "$GITHUB_PATH"
+
+      - name: Metal toolchain
+        run: |
+          xcrun metal --version >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
+
+      - name: Signing keychain and notary credentials
+        id: signing
+        env:
+          P12: ${{ secrets.MACOS_CERTIFICATE_P12 }}
+          P12_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+          TEAM: ${{ secrets.APPLE_TEAM_ID }}
+          KEY_P8: ${{ secrets.NOTARY_API_KEY_P8 }}
+          KEY_ID: ${{ secrets.NOTARY_API_KEY_ID }}
+          ISSUER: ${{ secrets.NOTARY_API_ISSUER_ID }}
+        run: |
+          if [ -z "$P12" ] || [ -z "$TEAM" ] || [ -z "$KEY_P8" ] || [ -z "$KEY_ID" ] || [ -z "$ISSUER" ]; then
+            echo "No signing secrets: an ad-hoc build."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          KC="$RUNNER_TEMP/signing.keychain-db"
+          KC_PASSWORD="$(uuidgen)"
+          security create-keychain -p "$KC_PASSWORD" "$KC"
+          security set-keychain-settings -lut 21600 "$KC"
+          security unlock-keychain -p "$KC_PASSWORD" "$KC"
+          echo "$P12" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -k "$KC" -P "$P12_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security
+          rm -f "$RUNNER_TEMP/cert.p12"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KC_PASSWORD" "$KC"
+          # first in the search list and the default, so codesign and
+          # notarytool's --keychain-profile both find it
+          security list-keychains -d user -s "$KC" $(security list-keychains -d user | tr -d '"')
+          security default-keychain -s "$KC"
+          echo "$KEY_P8" | base64 --decode > "$RUNNER_TEMP/notary.p8"
+          xcrun notarytool store-credentials tspico-notary --key "$RUNNER_TEMP/notary.p8" \
+            --key-id "$KEY_ID" --issuer "$ISSUER" --keychain "$KC"
+          rm -f "$RUNNER_TEMP/notary.p8"
+          security find-identity -v -p codesigning "$KC"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Build, sign and notarize
+        if: steps.signing.outputs.signed == 'true'
+        env:
+          TEAM: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          make dist DEVELOPMENT_TEAM="$TEAM" NOTARYTOOL_PROFILE=tspico-notary \
+            FUSE_CODESIGN_TIMESTAMP=--timestamp
+          mv Fuse.zip "Fuse-TS-Pico-macOS.zip"
+
+      - name: Build (ad-hoc signed)
+        if: steps.signing.outputs.signed != 'true'
+        run: |
+          make fuse
+          # Without the hardened runtime: an ad-hoc app with it can't load
+          # the ad-hoc Sparkle framework (no Team ID on either).
+          codesign --force --deep --sign - fusepb/build/Deployment/Fuse.app
+          ditto -c -k --keepParent fusepb/build/Deployment/Fuse.app "Fuse-TS-Pico-macOS-unsigned.zip"
+
+      - name: Remove the signing keychain
+        if: always() && steps.signing.outputs.signed == 'true'
+        run: security delete-keychain "$RUNNER_TEMP/signing.keychain-db" || true
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Fuse-TS-Pico-macOS
+          path: Fuse-TS-Pico-macOS*.zip
+          if-no-files-found: error
+
+      - name: Attach to the GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || \
+            gh release create "$GITHUB_REF_NAME" --title "Fuse for macOS with TS-Pico $GITHUB_REF_NAME" \
+              --notes-file TSPICO.md
+          gh release upload "$GITHUB_REF_NAME" Fuse-TS-Pico-macOS*.zip --clobber
