@@ -22,11 +22,12 @@ the same as the Linux and Windows Fuse in
 ## Using it
 
 1. Split the TS-Pico ROM (in tspico-firmware-build's [`src/rom/`](https://github.com/timex-sinclair-projects/tspico-firmware-build/tree/main/src/rom);
-   `TSPICO-22.ROM` at the time of writing) into two 16K halves, and choose
+   `TSPICO-23.ROM`, ROM 2.3, at the time of writing; use it with the `pico_host` from the
+   same release) into two 16K halves, and choose
    them in Preferences > ROMs as the TS2068's two ROMs:
 
-       head -c 16384 TSPICO-22.ROM > tspico-home.rom
-       tail -c 16384 TSPICO-22.ROM > tspico-exrom.rom
+       head -c 16384 TSPICO-23.ROM > tspico-home.rom
+       tail -c 16384 TSPICO-23.ROM > tspico-exrom.rom
 
 2. In Preferences > Peripherals, choose **TS-Pico (TS 2068)**. The bridge
    address defaults to `tcp:127.0.0.1:2068`.
